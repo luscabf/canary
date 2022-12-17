@@ -18,7 +18,7 @@
           "type": "FILEPATH"
         },
         "BUILD_STATIC_LIBRARY": "ON",
-        "VCPKG_TARGET_TRIPLET": "x64-windows-static",
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "OPTIONS_ENABLE_SCCACHE": "ON"
       },
