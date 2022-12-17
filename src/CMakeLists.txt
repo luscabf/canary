@@ -54,7 +54,7 @@ option(TOGGLE_BIN_FOLDER "Use build/bin folder for generate compilation files" O
 option(OPTIONS_ENABLE_OPENMP "Enable Open Multi-Processing support." ON)
 option(DEBUG_LOG "Enable Debug Log" OFF)
 option(ASAN_ENABLED "Build this target with AddressSanitizer" OFF)
-option(BUILD_STATIC_LIBRARY "Build using static libraries" OFF)
+option(BUILD_STATIC_LIBRARY "Build using static libraries" ON)
 
 
 # *****************************************************************************
@@ -362,6 +362,14 @@ if (MSVC)
 	)
 
 else()
+
+# Set static library flags for Linux
+if(BUILD_STATIC_LIBRARY AND UNIX AND NOT APPLE)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+  set(BUILD_SHARED_LIBS OFF)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lpthread -Wl,--no-whole-archive")
+endif()
 
 	target_include_directories(${PROJECT_NAME}
 		PRIVATE
